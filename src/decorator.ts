@@ -1,7 +1,7 @@
-import { ControllerOptions, applyDecorators, Controller } from '@nestjs/common';
 import { METHOD_METADATA, PATH_METADATA } from '@nestjs/common/constants';
 import { join } from 'path';
 import 'reflect-metadata';
+import { AppDataSource, upsertPermission } from './datasource';
 
 enum METHOD_TYPE {
   GET,
@@ -13,9 +13,11 @@ enum METHOD_TYPE {
   HEAD,
 }
 
-class ApiMetaDataProp {
+export class ApiMetaDataProp {
+  id?: string;
   name: string;
   description: string;
+  policy: string;
   route?: string;
   method?: string;
   upstream?: string;
@@ -26,7 +28,11 @@ export const MetaScope: {
 } = {};
 
 export const ApiMetaData = (prop: ApiMetaDataProp) => {
-  return (target: object, field: string, descriptor: PropertyDescriptor) => {
+  return function (
+    target: object,
+    field: string,
+    descriptor: PropertyDescriptor,
+  ) {
     MetaScope[field] = {
       ...prop,
       method:
@@ -37,30 +43,18 @@ export const ApiMetaData = (prop: ApiMetaDataProp) => {
 };
 
 export const ControllerMetaData = () => {
-  return (target: any) => {
-    console.log('target', target, Reflect.getMetadata(PATH_METADATA, target));
-
+  return function (target: any) {
     Object.keys(MetaScope).map((method) => {
-      console.log('metascope', method);
       (MetaScope[method].route = join(
-        Reflect.getMetadata(PATH_METADATA, target),
+        Reflect.getMetadata(PATH_METADATA, target) || '',
         MetaScope[method].route || '',
       )),
         (MetaScope[method].upstream = Reflect.getMetadata(
           PATH_METADATA,
           target,
         ));
-    });
 
-    console.log(MetaScope);
+      upsertPermission(MetaScope[method]).then(() => delete MetaScope[method]);
+    });
   };
 };
-
-export function CustomController(
-  prefixOrOptions?: string | string[] | ControllerOptions,
-): ClassDecorator {
-  return applyDecorators(
-    Controller(prefixOrOptions as any),
-    ControllerMetaData(),
-  );
-}
