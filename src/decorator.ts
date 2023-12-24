@@ -47,6 +47,7 @@ export const ControllerMetaData = (route: string) => {
   return function (target: any) {
     Object.keys(MetaScope).map((method) => {
       (MetaScope[method].route = join(
+        '/',
         Reflect.getMetadata(PATH_METADATA, target) || '',
         MetaScope[method].route || '',
       )),
