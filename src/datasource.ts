@@ -2,7 +2,9 @@ import { DataSource } from 'typeorm';
 import { ApiMetaDataProp } from './decorator';
 import { config } from 'dotenv';
 
-config();
+config({
+  path: '.env',
+});
 
 export const AppDataSource = new DataSource({
   type: 'postgres',
@@ -49,6 +51,6 @@ export const upsertPermission = async (data: ApiMetaDataProp) => {
     "updatedAt" = default
   `),
     )
-    .then(() => AppDataSource.close())
+    // .then(() => AppDataSource.close())
     .catch((error) => console.log('Insert permissions error: ', error));
 };

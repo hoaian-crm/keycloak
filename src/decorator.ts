@@ -2,6 +2,7 @@ import { METHOD_METADATA, PATH_METADATA } from '@nestjs/common/constants';
 import { join } from 'path';
 import 'reflect-metadata';
 import { AppDataSource, upsertPermission } from './datasource';
+import { Controller, applyDecorators } from '@nestjs/common';
 
 enum METHOD_TYPE {
   GET,
@@ -42,19 +43,24 @@ export const ApiMetaData = (prop: ApiMetaDataProp) => {
   };
 };
 
-export const ControllerMetaData = () => {
+export const ControllerMetaData = (route: string) => {
   return function (target: any) {
     Object.keys(MetaScope).map((method) => {
       (MetaScope[method].route = join(
         Reflect.getMetadata(PATH_METADATA, target) || '',
         MetaScope[method].route || '',
       )),
-        (MetaScope[method].upstream = Reflect.getMetadata(
-          PATH_METADATA,
-          target,
-        ));
-
-      upsertPermission(MetaScope[method]).then(() => delete MetaScope[method]);
+        (MetaScope[method].upstream = route);
+      const p = MetaScope[method];
+      delete MetaScope[method];
+      upsertPermission(p);
     });
   };
+};
+
+export const AppController = (route: string, upstream?: string) => {
+  return applyDecorators(
+    Controller(route),
+    ControllerMetaData(upstream || route),
+  );
 };

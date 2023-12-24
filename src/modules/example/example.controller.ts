@@ -1,8 +1,7 @@
 import { Controller, Get } from '@nestjs/common';
-import { ApiMetaData, ControllerMetaData } from 'src/decorator';
+import { ApiMetaData, AppController, ControllerMetaData } from 'src/decorator';
 
-@ControllerMetaData()
-@Controller('example')
+@AppController('example')
 export class ExampleController {
   @ApiMetaData({
     description: 'Hello world',

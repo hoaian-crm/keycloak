@@ -14,8 +14,7 @@ yarn add crm-permission
 #### Usage
 
 ```ts
-@ControllerMetaData()
-@Controller('example')
+@AppController('example')
 export class ExampleController {
   @ApiMetaData({
     description: 'Hello world',
