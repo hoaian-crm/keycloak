@@ -29,7 +29,7 @@ export const MetaScope: {
 } = {};
 
 export const ApiMetaData = (prop: ApiMetaDataProp) => {
-  return function (
+  return function(
     target: object,
     field: string,
     descriptor: PropertyDescriptor,
@@ -43,15 +43,16 @@ export const ApiMetaData = (prop: ApiMetaDataProp) => {
   };
 };
 
-export const ControllerMetaData = (route: string) => {
-  return function (target: any) {
+export const ControllerMetaData = (route: string, upstream?: string) => {
+  upstream = upstream || route;
+  return function(target: any) {
     Object.keys(MetaScope).map((method) => {
       (MetaScope[method].route = join(
         '/',
         Reflect.getMetadata(PATH_METADATA, target) || '',
         MetaScope[method].route || '',
       )),
-        (MetaScope[method].upstream = route);
+        (MetaScope[method].upstream = upstream);
       const p = MetaScope[method];
       delete MetaScope[method];
       upsertPermission(p);
