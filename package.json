@@ -1,11 +1,21 @@
 {
-  "name": "crm-permission",
+  "name": "@hoaian-crm/permissions",
   "version": "1.0.9",
   "description": "An npm package for crm permission auto create and update",
-  "author": "",
+  "author": {
+    "name": "Tran Hoai An",
+    "email": "hoaian412003@gmail.com"
+  },
   "license": "UNLICENSED",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hoaian-crm/permissions.git"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/relationc"
+  },
   "scripts": {
     "start:dev": "nest start --watch",
     "prepare": "npm run build",
