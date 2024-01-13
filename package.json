@@ -1,6 +1,6 @@
 {
   "name": "@relationc/permissions",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "description": "An npm package for crm permission auto create and update",
   "author": {
     "name": "Tran Hoai An",
