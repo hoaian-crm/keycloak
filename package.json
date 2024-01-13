@@ -1,5 +1,5 @@
 {
-  "name": "@hoaian-crm/permissions",
+  "name": "@relationc/permissions",
   "version": "1.0.9",
   "description": "An npm package for crm permission auto create and update",
   "author": {
@@ -14,7 +14,7 @@
     "url": "https://github.com/hoaian-crm/permissions.git"
   },
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com/relationc"
+    "registry": "https://registry.npmjs.org"
   },
   "scripts": {
     "start:dev": "nest start --watch",
