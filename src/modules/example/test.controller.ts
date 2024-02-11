@@ -3,6 +3,7 @@ import { ApiMetaData, AppController } from 'src/decorator';
 
 @AppController('test', 'test_upstream')
 export class TestController {
+
   @ApiMetaData({
     description: 'Api for test',
     name: 'Test',

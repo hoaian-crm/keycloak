@@ -1,4 +1,4 @@
 // export public api from here
-// for example:
+// for Example:
 
 export * from './decorator';

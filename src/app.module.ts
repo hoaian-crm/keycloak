@@ -1,8 +1,9 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { ExampleModule } from './modules/example/example.module';
+import { ExampleModule } from './modules/Example/Example.module';
 import { PermissionModule } from './modules/permissions/module';
+import { KeycloakModule } from './modules/keyloak/keycloak.module';
 
 @Module({
   imports: [
@@ -20,8 +21,24 @@ import { PermissionModule } from './modules/permissions/module';
       autoLoadEntities: true,
       logging: process.env.NODE_ENV === 'development',
     }),
+    // Keycloack Module
+    KeycloakModule.register({
+      admin: {
+        username: 'admin',
+        password: '123123123',
+        realName: 'development',
+        serverUrl: 'https://oauth.relationc.com',
+        clientId: 'admin-cli',
+        clientSecret: '46mHDSr4rkjE8M7TeBQKkRb8wCHhbUFP',
+      },
+      client: {
+        realm: 'development',
+        clientId: '948cd62b-1c9f-4b6b-afdf-86d62148217f',
+        clientName: 'development'
+      }
+    }),
     PermissionModule,
     ExampleModule,
   ],
 })
-export class AppModule {}
+export class AppModule { }

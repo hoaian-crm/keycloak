@@ -1,13 +1,15 @@
 import { Controller, Get } from '@nestjs/common';
-import { ApiMetaData, AppController, ControllerMetaData } from 'src/decorator';
+import { Can, Resource } from '../keyloak/decorator';
 
-@AppController('example')
+@Controller('example')
+@Resource({
+  name: 'example',
+  displayName: 'Example Resource',
+  resource_scopes: ['read', 'write', 'delete'],
+})
 export class ExampleController {
-  @ApiMetaData({
-    description: 'Hello world',
-    name: 'Hello',
-    policy: 'example:hello',
-  })
+
+  @Can(['read', 'update'])
   @Get('/hello')
   async hello() {
     return 'Hello';

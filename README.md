@@ -14,12 +14,12 @@ yarn add crm-permission
 #### Usage
 
 ```ts
-@AppController('example')
+@AppController('Example')
 export class ExampleController {
   @ApiMetaData({
     description: 'Hello world',
     name: 'Hello',
-    policy: 'example:hello',
+    policy: 'Example:hello',
   })
   @Get('/hello')
   async hello() {
