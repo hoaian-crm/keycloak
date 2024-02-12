@@ -4,6 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ExampleModule } from './modules/Example/Example.module';
 import { PermissionModule } from './modules/permissions/module';
 import { KeycloakModule } from './modules/keyloak/keycloak.module';
+import { AppController } from './app.controller';
 
 @Module({
   imports: [
@@ -40,5 +41,7 @@ import { KeycloakModule } from './modules/keyloak/keycloak.module';
     PermissionModule,
     ExampleModule,
   ],
+
+  // controllers: [AppController]
 })
 export class AppModule { }
