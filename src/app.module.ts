@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { ExampleModule } from './modules/Example/Example.module';
 import { PermissionModule } from './modules/permissions/module';
 import { KeycloakModule } from './modules/keyloak/keycloak.module';
 import { AppController } from './app.controller';
+import { ExampleModule } from './modules/example/example.module';
 
 @Module({
   imports: [
